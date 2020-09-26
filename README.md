@@ -3,6 +3,6 @@
 
 Copy files to ~/.config/i3/
 
-Requires Conky
+uses i3blocks
 
 setup for dvorak keyboard layout
