@@ -1,0 +1,76 @@
+# i3blocks configuration file
+#
+# The i3blocks man page describes the usage of the binary,
+# and its website describes the configuration:
+#
+#     https://vivien.github.io/i3blocks
+
+
+# Global properties
+separator=true
+separator_block_width=15
+color=#BFBFBF
+SCRIPT_DIR=/home/azriel/.config/i3blocks
+
+[bandwidth3]
+command=$SCRIPT_DIR/bandwidth3/bandwidth3
+interval=persist
+#LABEL=<span font='FontAwesome'>  </span>
+#IFACE=[automatically determined]
+#DT=3
+#UNIT=Mb
+# Exposed variables: rx, wx, tx, unit, iface
+PRINTF_COMMAND=printf "D: %-5.1fU: %-5.1f%s/s\n", rx, wx, unit;
+#PRINTF_COMMAND=printf "${LABEL}%-5.1f/%5.1f %s/s\n", rx, wx, unit;
+
+[memory]
+#original script edited to change displayed text - AL
+command=$SCRIPT_DIR/memory/memory
+label=MEM 
+interval=2
+
+[cpu_usage]
+command=$SCRIPT_DIR/cpu_usage/cpu_usage
+interval=2
+LABEL=CPU 
+min_width=CPU 00%
+#T_WARN=50
+T_CRIT=90
+DECIMALS=0
+
+[temperature]
+command=$SCRIPT_DIR/temperature/temperature
+#label=TEMP
+interval=2
+T_WARN=70
+T_CRIT=90
+#SENSOR_CHIP=""
+
+[iface]
+command=$SCRIPT_DIR/iface/iface
+#LABEL=wlan0:
+#IFACE=wlan0
+#ADDRESS_FAMILY=inet6?
+color=#00FF00
+interval=10
+
+[volume]
+#command=/home/azriel/.config/i3blocks/volume/volume
+command=$SCRIPT_DIR/volume/volume
+LABEL=♪ 
+#LABEL=VOL 
+interval=once
+signal=10
+#STEP=5%
+#MIXER=[determined automatically]
+#SCONTROL=[determined automatically]
+#NATURAL_MAPPING=0
+
+[time]
+command=date '+%H:%M'
+interval=1
+color=#F1FA8C
+
+[date]
+command=date "+%d-%m %a"
+interval=1
