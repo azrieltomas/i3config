@@ -32,7 +32,7 @@ font pango:roboto 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec mate-terminal
 
 # kill focused window
 bindsym $mod+Shift+Q kill
@@ -166,27 +166,43 @@ mode "resize" {
 bindsym $mod+p mode "resize"
 
 # CUSTOM ADDS
-# fix screen tearing
-exec_always --no-startup-id ~/scripts/screentearing.sh
-#startup applicatons
+# fix screen tearing > these can be migrated to systemd, really
+# exec_always --no-startup-id ~/scripts/screentearing.sh
+# startup applicatons
+# insync | redshift | private internet access client | qbittorrent (script restarts it on crash)
 exec --no-startup-id insync start
 exec_always --no-startup-id redshift -PO 5500
 exec --no-startup-id /opt/piavpn/bin/pia-client
+exec --no-startup-id /usr/bin/bash /home/azriel/scripts/torrentforever.sh
+
 # load wallpaper
 exec --no-startup-id feh --bg-fill ~/Pictures/Aerial_view_of_the_Apollo_8_Saturn-V.jpg
+
+# set video output to 144 Hz
+exec --no-startup-id xrandr --output DP-0 --mode 2560x1440 --rate 144.01 
+
 # volume control
 bindsym $mod+F12 exec amixer -q set Master 2%+ unmute && pkill -RTMIN+10 i3blocks 
 bindsym $mod+F11 exec amixer -q set Master 2%- unmute && pkill -RTMIN+10 i3blocks 
 bindsym $mod+F10 exec amixer -q set Master toggle && pkill -RTMIN+10 i3blocks 
+
 #floating windows
+#PROTIP: run 'xprop' in terminal to find out the class etc of a window
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable 
 for_window [class="Insync"] floating enable
 for_window [class="abcde_album_art"] floating enable
+for_window [title="System Monitor"] floating enable resize set 800 800
+for_window [class="Engrampa"] floating enable resize set 800 600
+
 #shortcuts
 bindsym $mod+f exec caja
 bindsym $mod+g exec google-chrome-stable
 bindsym $mod+Shift+G exec google-chrome-stable --incognito
+
 #floating Steam windows
 # https://github.com/ValveSoftware/steam-for-linux/issues/1040
 # https://github.com/z3ntu/dotfiles/blob/master/i3/.config/i3/config
@@ -216,7 +232,7 @@ bindsym $mod+Shift+F12 mode "$mode_keyboard"
 #power functions
 set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id i3lock -c 282A36, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym r exec --no-startup-id i3exit reboot, mode "default"
@@ -230,7 +246,10 @@ bindsym $mod+Pause mode "$mode_system"
 
 #screenshot
 bindsym Print exec mate-screenshot
-bindsym Shift+Print exec mate-screenshot -a 
+bindsym $mod+Print exec mate-screenshot -i
+
+#emote
+bindsym $mod+Shift+E exec emote
 
 #colours
 # class                 border  bground text    indicator child_border
