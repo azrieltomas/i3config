@@ -1,0 +1,34 @@
+#!/bin/sh
+
+MAX_TEMP=7500
+MIN_TEMP=2000
+STEP=100
+
+#tmp file is created at i3 startup (see i3 config file)
+#TO DO - create a file if one does not exist with a default value
+COLOUR_TEMP=$(cat /tmp/colourvariable)
+
+case $BLOCK_BUTTON in
+#    1)  if [ "$(pgrep -x redshift)" ]; then
+#            ;
+#        fi ;;
+    4)  if (($COLOUR_TEMP < $MAX_TEMP)); then
+          let COLOUR_TEMP+=$STEP;
+        fi ;;
+    5)  if (($COLOUR_TEMP > $MIN_TEMP)); then
+            let COLOUR_TEMP-=$STEP;
+        fi ;;
+esac
+
+TEXT=${COLOUR_TEMP}"K"
+redshift -PO $COLOUR_TEMP > /dev/null
+
+#if [ "$(pgrep -x redshift)" ]; then
+#    TEXT=${COLOUR_TEMP}"K"
+#    redshift -PO $COLOUR_TEMP > /dev/null
+#else
+#    TEXT="(OFF)"
+#fi
+
+echo $TEXT
+echo $COLOUR_TEMP>/tmp/colourvariable

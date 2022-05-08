@@ -46,6 +46,16 @@ T_WARN=70
 T_CRIT=90
 #SENSOR_CHIP=""
 
+[monitor]
+command=mate-system-monitor
+full_text=📈
+separator=false      
+
+[redshift]
+command=$SCRIPT_DIR/redshift-blocklet/redshift
+interval=1
+color=#F1FA8C
+
 [iface]
 command=$SCRIPT_DIR/iface/iface
 #LABEL=wlan0:
@@ -61,7 +71,7 @@ LABEL=♪
 #LABEL=VOL 
 interval=once
 signal=10
-#STEP=5%
+STEP=2%
 #MIXER=[determined automatically]
 #SCONTROL=[determined automatically]
 #NATURAL_MAPPING=0
@@ -74,3 +84,7 @@ color=#F1FA8C
 [date]
 command=date "+%d-%m %a"
 interval=1
+
+[calculator]
+command=mate-calculator
+full_text=💠
