@@ -1,13 +1,20 @@
 #!/bin/bash
 
+echo "Updating vimrc"
+cd ~/.vim_runtime
+git reset --hard
+git clean -d --force
+git pull --rebase
+python update_plugins.py
+
 echo "Updating zsh autosuggestions"
-cd /home/azriel/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+cd ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 git pull
 echo "Updating zsh syntax highlighting"
-cd /home/azriel/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+cd ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git pull
 echo "Updating zsh powerlevel10k"
-cd /home/azriel/.oh-my-zsh/custom/themes/powerlevel10k
+cd ~/.oh-my-zsh/custom/themes/powerlevel10k
 git pull
 
 echo "run 'p10k configure' to reconfigure powerlevel10k"
